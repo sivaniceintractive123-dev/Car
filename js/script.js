@@ -758,31 +758,56 @@
     }
     requestAnimationFrame(smoothRPM);
 
-    if (ignitionBtn) {
-      ignitionBtn.addEventListener('click', () => {
-        if (!isEngineRunning) {
-          startEngine();
+    function toggleV12Sound() {
+      if (!isEngineRunning) {
+        startEngine();
+        targetRPM = 850 + Math.random() * 50;
+        if (ignitionBtn) {
           ignitionBtn.classList.add('active');
-          ignitionBtn.querySelector('.btn-label').textContent = 'STOP';
-          targetRPM = 850 + Math.random() * 50; // Idle wobble
-          if (audioDot) audioDot.classList.add('bg-emerald-400');
-          if (audioText) audioText.textContent = 'V12 LIVE';
-        } else {
-          stopEngine();
-          ignitionBtn.classList.remove('active');
-          ignitionBtn.querySelector('.btn-label').textContent = 'START';
-          targetRPM = 0;
-          if (audioDot) audioDot.classList.remove('bg-emerald-400');
-          if (audioText) audioText.textContent = 'V12 SOUND';
+          const lbl = ignitionBtn.querySelector('.btn-label');
+          if (lbl) lbl.textContent = 'STOP';
         }
-      });
+        if (audioDot) audioDot.classList.add('bg-emerald-400');
+        if (audioText) audioText.textContent = 'V12 LIVE';
+        const heroSnd = document.getElementById('hero-sound-btn');
+        if (heroSnd) heroSnd.textContent = 'STOP V12 SOUND';
+        const mobSnd = document.getElementById('mobile-sound-toggle-btn');
+        if (mobSnd) mobSnd.textContent = 'STOP V12 SOUND';
+      } else {
+        stopEngine();
+        targetRPM = 0;
+        if (ignitionBtn) {
+          ignitionBtn.classList.remove('active');
+          const lbl = ignitionBtn.querySelector('.btn-label');
+          if (lbl) lbl.textContent = 'START';
+        }
+        if (audioDot) audioDot.classList.remove('bg-emerald-400');
+        if (audioText) audioText.textContent = 'V12 SOUND';
+        const heroSnd = document.getElementById('hero-sound-btn');
+        if (heroSnd) heroSnd.textContent = 'START V12 AUDIO ENGINE';
+        const mobSnd = document.getElementById('mobile-sound-toggle-btn');
+        if (mobSnd) mobSnd.textContent = 'START V12 SOUND';
+      }
     }
 
-    if (audioToggleNav) {
-      audioToggleNav.addEventListener('click', () => {
-        if (ignitionBtn) ignitionBtn.click();
-      });
-    }
+    if (ignitionBtn) ignitionBtn.addEventListener('click', toggleV12Sound);
+    if (audioToggleNav) audioToggleNav.addEventListener('click', toggleV12Sound);
+
+    const heroSoundBtn = document.getElementById('hero-sound-btn');
+    if (heroSoundBtn) heroSoundBtn.addEventListener('click', toggleV12Sound);
+
+    const playbarSoundBtn = document.getElementById('playbar-sound-btn');
+    if (playbarSoundBtn) playbarSoundBtn.addEventListener('click', toggleV12Sound);
+
+    const modalSoundBtn = document.getElementById('modal-sound-btn');
+    if (modalSoundBtn) modalSoundBtn.addEventListener('click', () => {
+      toggleV12Sound();
+      const modal = document.getElementById('details-modal');
+      if (modal) modal.classList.remove('active');
+    });
+
+    const mobileSoundBtn = document.getElementById('mobile-sound-toggle-btn');
+    if (mobileSoundBtn) mobileSoundBtn.addEventListener('click', toggleV12Sound);
 
     if (throttleSlider) {
       throttleSlider.addEventListener('input', (e) => {
@@ -1000,6 +1025,8 @@
       }
     }
 
+    const heroVideoBtn = document.getElementById('hero-video-btn');
+    if (heroVideoBtn) heroVideoBtn.addEventListener('click', openVideoModal);
     if (videoBtn) videoBtn.addEventListener('click', openVideoModal);
     if (mobileVideoBtn) mobileVideoBtn.addEventListener('click', openVideoModal);
     if (galleryVideoTrigger) galleryVideoTrigger.addEventListener('click', openVideoModal);
@@ -1019,6 +1046,33 @@
   }
 
   // ==========================================================================
+  // 14. STAGE ACT BUTTON NAVIGATION
+  // ==========================================================================
+  function setupStageButtons() {
+    const stageBtns = document.querySelectorAll('.nav-stage-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    stageBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const prog = parseFloat(btn.getAttribute('data-progress') || '0');
+        targetProgress = prog;
+        currentProgress = prog;
+
+        if (mobileMenu) {
+          mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
+          mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+        }
+
+        if (revealSection) {
+          const totalScrollable = revealSection.offsetHeight - window.innerHeight;
+          const newScrollY = revealSection.offsetTop + (prog * totalScrollable);
+          window.scrollTo({ top: newScrollY, behavior: 'smooth' });
+        }
+      });
+    });
+  }
+
+  // ==========================================================================
   // INITIALIZATION
   // ==========================================================================
   function init() {
@@ -1033,6 +1087,7 @@
     setupKeyboardControls();
     setupMobileMenu();
     setupVideoModal();
+    setupStageButtons();
 
     // Trigger initial scroll calculation
     updateScrollProgress();
