@@ -1,0 +1,716 @@
+/* ==========================================================================
+   SCUDERIA CLASSICHE - 1962 V12 BERLINETTA
+   Ultra-Luxury Automotive Interactive Experience Stylesheet
+   ========================================================================== */
+
+:root {
+  --color-black: #060608;
+  --color-surface: #0d0e12;
+  --color-card: #13141a;
+  --color-card-border: rgba(255, 255, 255, 0.08);
+  --color-gold: #d4af37;
+  --color-gold-light: #f5d77f;
+  --color-gold-glow: rgba(212, 175, 55, 0.35);
+  --color-crimson: #8c1015;
+  --color-crimson-bright: #b8141b;
+  --color-cream: #f4ede2;
+  --color-muted: #8c8882;
+  --color-border-subtle: rgba(255, 255, 255, 0.06);
+
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-display: 'Cinzel', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --ease-cinematic: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Base & Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--color-black);
+  color: var(--color-cream);
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--color-black);
+  overflow-x: hidden;
+  position: relative;
+  min-height: 100vh;
+}
+
+::selection {
+  background: var(--color-gold);
+  color: var(--color-black);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #060608;
+}
+::-webkit-scrollbar-thumb {
+  background: #2a2825;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gold);
+}
+
+/* Film Grain Overlay */
+.film-grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.038'/%3E%3C/svg%3E");
+}
+
+/* Typography Helpers */
+.font-display { font-family: var(--font-display); }
+.font-serif { font-family: var(--font-serif); }
+.font-sans { font-family: var(--font-sans); }
+.font-mono { font-family: var(--font-mono); }
+
+.text-gold {
+  color: var(--color-gold);
+}
+
+.text-gradient-gold {
+  background: linear-gradient(135deg, #ffffff 0%, #f6e0a4 40%, #c5a059 70%, #997838 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-glow-gold {
+  text-shadow: 0 0 25px rgba(212, 175, 55, 0.45), 0 0 50px rgba(212, 175, 55, 0.2);
+}
+
+.text-glow-crimson {
+  text-shadow: 0 0 25px rgba(184, 20, 27, 0.6);
+}
+
+/* Glassmorphism */
+.glass-panel {
+  background: rgba(13, 14, 18, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--color-card-border);
+}
+
+.glass-card {
+  background: rgba(19, 20, 26, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  transition: all 0.4s var(--ease-cinematic);
+}
+
+.glass-card:hover {
+  border-color: rgba(212, 175, 55, 0.35);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.8), 0 0 20px -5px rgba(212, 175, 55, 0.15);
+}
+
+/* Buttons */
+.btn-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.75rem;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #060608;
+  background: linear-gradient(135deg, #f6e0a4 0%, #d4af37 60%, #aa8524 100%);
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.35s ease;
+  box-shadow: 0 4px 20px rgba(212, 175, 55, 0.25);
+  text-decoration: none;
+}
+
+.btn-gold:hover {
+  background: linear-gradient(135deg, #fff 0%, #f5d77f 60%, #c5a059 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(212, 175, 55, 0.4);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.75rem;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-cream);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  transition: all 0.35s ease;
+  text-decoration: none;
+}
+
+.btn-outline:hover {
+  border-color: var(--color-gold);
+  color: var(--color-gold);
+  background: rgba(212, 175, 55, 0.08);
+  transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   PRELOADER
+   ========================================================================== */
+#preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: #060608;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.8s var(--ease-cinematic), visibility 0.8s;
+}
+
+#preloader.loaded {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.loader-emblem {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.loader-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(212, 175, 55, 0.15);
+}
+
+.loader-ring:nth-child(1) {
+  border-top-color: var(--color-gold);
+  animation: spinRing 2.2s linear infinite;
+}
+
+.loader-ring:nth-child(2) {
+  inset: 10px;
+  border-right-color: var(--color-crimson);
+  animation: spinRing 3s linear infinite reverse;
+}
+
+@keyframes spinRing {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loader-bar-track {
+  width: 280px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.08);
+  position: relative;
+  overflow: hidden;
+  margin-top: 1.5rem;
+  border-radius: 2px;
+}
+
+.loader-bar-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--color-crimson), var(--color-gold), #fff);
+  box-shadow: 0 0 10px var(--color-gold);
+  transition: width 0.15s ease-out;
+}
+
+/* ==========================================================================
+   NAVIGATION
+   ========================================================================== */
+#main-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 1.25rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(180deg, rgba(6, 6, 8, 0.95) 0%, rgba(6, 6, 8, 0.6) 60%, transparent 100%);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+}
+
+.nav-link {
+  position: relative;
+  font-size: 0.72rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(244, 237, 226, 0.75);
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  padding: 0.25rem 0;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--color-gold);
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover {
+  color: var(--color-gold);
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* ==========================================================================
+   SCROLL REVEAL VIEWPORT & PINNED STAGE
+   ========================================================================== */
+#reveal-section {
+  position: relative;
+  width: 100%;
+  /* Virtual scroll length: height drives the 153 frames */
+  height: 500vh;
+}
+
+.canvas-sticky-wrapper {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: #060608;
+}
+
+#car-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Vignette Gradients for Cinematic Feel */
+.canvas-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 50%, transparent 35%, rgba(6, 6, 8, 0.7) 80%, rgba(6, 6, 8, 0.95) 100%);
+  z-index: 10;
+}
+
+.canvas-bottom-fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 180px;
+  background: linear-gradient(to top, #060608 0%, rgba(6, 6, 8, 0.8) 40%, transparent 100%);
+  pointer-events: none;
+  z-index: 11;
+}
+
+/* ==========================================================================
+   STORYTELLING HUD STAGES OVER CANVAS
+   ========================================================================== */
+.hud-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 6.5rem 2.5rem 2rem;
+}
+
+.interactive-hud {
+  pointer-events: auto;
+}
+
+.story-card {
+  position: absolute;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s var(--ease-cinematic), transform 0.6s var(--ease-cinematic);
+  pointer-events: none;
+  max-width: 480px;
+}
+
+.story-card.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Card positions */
+.story-card-center {
+  left: 50%;
+  top: 45%;
+  transform: translate(-50%, -40%);
+  text-align: center;
+  max-width: 820px;
+  width: 90%;
+}
+.story-card-center.active {
+  opacity: 1;
+  transform: translate(-50%, -50%);
+}
+
+.story-card-left {
+  left: 3rem;
+  top: 35%;
+}
+
+.story-card-right {
+  right: 3rem;
+  top: 32%;
+}
+
+/* ==========================================================================
+   INTERACTIVE 3D BEACONS / HOTSPOTS
+   ========================================================================== */
+.hotspot-beacon {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  z-index: 30;
+  transition: opacity 0.5s ease, transform 0.3s ease;
+}
+
+.beacon-core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  background: var(--color-gold);
+  border-radius: 50%;
+  box-shadow: 0 0 12px var(--color-gold);
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.beacon-pulse {
+  position: absolute;
+  inset: -6px;
+  border: 1px solid var(--color-gold);
+  border-radius: 50%;
+  animation: beaconPulse 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes beaconPulse {
+  0% { transform: scale(0.6); opacity: 1; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+.hotspot-beacon:hover .beacon-core {
+  transform: translate(-50%, -50%) scale(1.4);
+  background: #ffffff;
+}
+
+.beacon-tooltip {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  background: rgba(13, 14, 18, 0.92);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  padding: 0.6rem 1rem;
+  border-radius: 4px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+}
+
+.hotspot-beacon:hover .beacon-tooltip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ==========================================================================
+   BOTTOM PLAYBAR & SCRUBBER
+   ========================================================================== */
+.cinematic-playbar {
+  position: relative;
+  z-index: 25;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  background: rgba(13, 14, 18, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 0.85rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.8), 0 0 30px -5px rgba(212, 175, 55, 0.1);
+}
+
+.scrubber-track {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  position: relative;
+  cursor: pointer;
+  transition: height 0.2s ease;
+}
+
+.scrubber-track:hover {
+  height: 6px;
+}
+
+.scrubber-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--color-crimson), var(--color-gold));
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+.scrubber-thumb {
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 10px var(--color-gold);
+  pointer-events: none;
+  transition: transform 0.15s ease;
+}
+
+.scrubber-track:hover .scrubber-thumb {
+  transform: translate(-50%, -50%) scale(1.3);
+}
+
+/* ==========================================================================
+   V12 ENGINE AUDIO SYNTHESIZER CONSOLE
+   ========================================================================== */
+.synth-console {
+  background: linear-gradient(145deg, #111218 0%, #08090b 100%);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 16px;
+  padding: 2.5rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1), 0 20px 50px rgba(0, 0, 0, 0.9);
+}
+
+.tachometer-ring {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  margin: 0 auto;
+}
+
+.gauge-needle {
+  transform-origin: 110px 110px;
+  transition: transform 0.1s linear;
+}
+
+.ignition-btn {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #e6222b 0%, #8c1015 65%, #4a080b 100%);
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 25px rgba(184, 20, 27, 0.5), inset 0 2px 4px rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  transition: all 0.2s ease;
+}
+
+.ignition-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 35px rgba(230, 34, 43, 0.8), inset 0 2px 4px rgba(255, 255, 255, 0.6);
+}
+
+.ignition-btn.active {
+  background: radial-gradient(circle at 35% 35%, #44e870 0%, #1e873a 65%, #0f4a1f 100%);
+  box-shadow: 0 0 35px rgba(68, 232, 112, 0.7);
+}
+
+.throttle-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  outline: none;
+  cursor: pointer;
+}
+
+.throttle-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--color-gold);
+  cursor: grab;
+  box-shadow: 0 0 15px var(--color-gold);
+  border: 2px solid #fff;
+}
+
+/* ==========================================================================
+   COLOR ATELIER SWATCHES
+   ========================================================================== */
+.swatch-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.swatch-btn.active {
+  border-color: var(--color-gold);
+  transform: scale(1.15);
+  box-shadow: 0 0 20px var(--color-gold-glow);
+}
+
+.swatch-btn::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.swatch-btn.active::after {
+  border-color: rgba(212, 175, 55, 0.4);
+}
+
+/* ==========================================================================
+   NORMAL FOOTER ("bottum section narml ga")
+   ========================================================================== */
+.footer-normal {
+  background: #040406;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  position: relative;
+  z-index: 30;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s;
+  padding: 1.5rem;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-window {
+  background: #0d0e14;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(212, 175, 55, 0.15);
+  max-width: 650px;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  transform: scale(0.95);
+  transition: transform 0.4s var(--ease-cinematic);
+}
+
+.modal-overlay.active .modal-window {
+  transform: scale(1);
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  #main-header {
+    padding: 1rem 1.25rem;
+  }
+  .hud-layer {
+    padding: 5.5rem 1.25rem 1.5rem;
+  }
+  .story-card-left, .story-card-right {
+    position: relative;
+    left: auto;
+    right: auto;
+    top: auto;
+    max-width: 100%;
+    margin-bottom: 1rem;
+  }
+  .story-card-center {
+    width: 100%;
+  }
+}
